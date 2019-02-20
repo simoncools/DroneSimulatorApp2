@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <corners
+     android:radius="10dp" />
+    <gradient
+        android:endColor="@color/Joystick"
+        android:startColor="@color/Joystick"
+        />
+    <stroke
+        android:color="@color/JoystickAccent"
+        android:width="6dp"
+        />
+    <padding
+        android:top="25dp"/>
+</shape>
