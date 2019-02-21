@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class TCPConnection {
@@ -24,7 +25,7 @@ public class TCPConnection {
         try {
         out.println(msg);
             resp = in.readLine();
-        }catch (Exception e){
+        }catch (IOException e){
             resp="failed, no connection";
         }
         return resp;
@@ -33,10 +34,11 @@ public class TCPConnection {
     public String startConnection() {
         String resp ="connection succes";
         try{
-            clientSocket = new Socket(ip, port);
+            InetAddress serverIp = InetAddress.getByName(ip);
+            clientSocket = new Socket(serverIp, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        }catch (Exception e){
+        }catch (IOException e){
             resp="connecting failed to " + ip + ":" + port;
         }
         return resp;
@@ -49,7 +51,7 @@ public class TCPConnection {
             out.close();
             clientSocket.close();
             clientSocket=null;
-        }catch (Exception e){
+        }catch (IOException e){
             resp="disconnecting failed";
         }
         return resp;
