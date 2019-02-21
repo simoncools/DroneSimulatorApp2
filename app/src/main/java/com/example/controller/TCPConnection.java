@@ -31,7 +31,7 @@ public class TCPConnection {
     }
 
     public String startConnection() {
-        String resp ="succes";
+        String resp ="connection succes";
         try{
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -43,7 +43,7 @@ public class TCPConnection {
     }
 
     public String stopConnection() {
-        String resp = "connection succes";
+        String resp = "disconnection succes";
         try{
             in.close();
             out.close();
