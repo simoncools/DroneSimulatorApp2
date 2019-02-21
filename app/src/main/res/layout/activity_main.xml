@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginRight="50dp"
+
                 app:JV_borderWidth="6dp"
                 app:JV_backgroundColor="@color/Joystick"
                 app:JV_borderColor="@color/JoystickAccent"
