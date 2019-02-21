@@ -1,7 +1,10 @@
 package com.example.controller;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,37 +13,31 @@ import android.widget.Toast;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
-    TCPConnection connection = new TCPConnection("192.168.1.50", 1234);
-
+    Context ctx;
+    TcpClient mTcpClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         joystickListener();
         buttonListener();
+        ctx = getApplicationContext();
     }
 
     public void buttonListener(){
-        //connection button
         final Button connectButton = findViewById(R.id.connect_button);
-        connectButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick (View v){
-                if (!connection.isConnected()) {
-                    String resp = connection.startConnection();
-                    if ("connection succes" == resp) {
-                        connectButton.setText("disconnect");
-                    }
-                    Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
+        connectButton.setOnClickListener(v->{
+            if(mTcpClient != null) {
+                if (!mTcpClient.ismRun()) {
+                    new ConnectTask().execute("");
                 } else {
-                    String resp = connection.stopConnection();
-                    if ("disconnect succes" == resp) {
-                        connectButton.setText("connect");
-                    }
-                    Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
+                    mTcpClient.stopClient();
                 }
+            }else{
+                new ConnectTask().execute("");
             }
-        });
+            });
+
     }
 
 
@@ -53,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
                 joystickText.setText("x"+ xStrength + " y" + yStrength);
-                String resp = connection.sendMessage("x"+ xStrength + " y" + yStrength);
+                if(mTcpClient != null) {
+                    mTcpClient.sendMessage("JX1 " + xStrength + " JY1 " + yStrength);
+                }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
             }
         });
@@ -66,11 +65,30 @@ public class MainActivity extends AppCompatActivity {
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
                 joystickText.setText("x"+ xStrength + " y" + yStrength);
-                String resp = connection.sendMessage("x"+ xStrength + " y" + yStrength);
+                if(mTcpClient != null) {
+                    mTcpClient.sendMessage("JX2 " + xStrength + " JY2 " + yStrength);
+                }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    public class ConnectTask extends AsyncTask<String, String, TcpClient> {
 
+        @Override
+        protected TcpClient doInBackground(String... message) {
+            mTcpClient = new TcpClient(msg-> {
+                    publishProgress(msg);
+            });
+            mTcpClient.run();
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            System.out.println("Response: "+values[0]);
+        }
+
+    }
 }
