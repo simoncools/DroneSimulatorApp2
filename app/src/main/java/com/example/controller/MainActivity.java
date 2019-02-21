@@ -10,7 +10,7 @@ import android.widget.Toast;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
-    TCPConnection connection = new TCPConnection("192.168.0.1", 156);
+    TCPConnection connection = new TCPConnection("192.168.1.50", 1234);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

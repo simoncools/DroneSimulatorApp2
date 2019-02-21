@@ -37,7 +37,7 @@ public class TCPConnection {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         }catch (Exception e){
-            resp="connecting failed";
+            resp="connecting failed to " + ip + ":" + port;
         }
         return resp;
     }
