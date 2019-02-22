@@ -12,7 +12,7 @@ import java.net.Socket;
 public class TcpClient {
 
     public static final String TAG = TcpClient.class.getSimpleName();
-    public static final String SERVER_IP = "192.168.1.102"; //server IP address
+    public static final String SERVER_IP = "10.46.211.19"; //server IP address
     public static final int SERVER_PORT = 52832;
     private String mServerMessage;
     private OnMessageReceived mMessageListener = null;
@@ -20,6 +20,13 @@ public class TcpClient {
     private PrintWriter mBufferOut;
     private BufferedReader mBufferIn;
 
+    public static String getServerIp() {
+        return SERVER_IP;
+    }
+
+    public static int getServerPort() {
+        return SERVER_PORT;
+    }
 
     public TcpClient(OnMessageReceived listener) {
         mMessageListener = listener;

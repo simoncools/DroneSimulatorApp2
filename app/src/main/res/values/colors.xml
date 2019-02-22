@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="Joystick">#E0E0E0</color>
     <color name="JoystickAccent">#717171</color>
+    <color name="JoystickAccentTrans">#717171</color>
     <color name="Button">#949494</color>
     <color name="ButtonAccent">#616161</color>
 </resources>
