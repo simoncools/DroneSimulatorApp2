@@ -30,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
                     new ConnectTask().execute("");
+                    if (mTcpClient.ismRun()) connectButton.setText("Stop");
                 } else {
                     mTcpClient.stopClient();
+                    if (mTcpClient.ismRun()) connectButton.setText("Start");
                 }
             }else{
                 new ConnectTask().execute("");
