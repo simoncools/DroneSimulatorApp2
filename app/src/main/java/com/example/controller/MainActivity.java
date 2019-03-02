@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 new ConnectTask().execute("");
             }
-            });
+        });
+
 
     }
 
