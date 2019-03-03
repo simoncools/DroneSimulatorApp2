@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button movementControlButton = findViewById(R.id.MC_button);
+        movementControlButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, movementActivity.class);
+           // intent.putExtra("tcpClient", mTcpClient);
+            startActivity(intent);
+        });
 
     }
 
