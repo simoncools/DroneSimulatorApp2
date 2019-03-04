@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
         joystickListener();
         buttonListener();
         ctx = getApplicationContext();
+
     }
+
+
 
     public void buttonListener(){
         final Button connectButton = findViewById(R.id.connect_button);
@@ -47,6 +52,21 @@ public class MainActivity extends AppCompatActivity {
            // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
         });
+
+        final Button helpButton = findViewById(R.id.help_button);
+        helpButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, helpActivity.class);
+            // intent.putExtra("tcpClient", mTcpClient);
+            startActivity(intent);
+        });
+
+        final Button settingsButton = findViewById(R.id.settings_button);
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, settingsActivity.class);
+            // intent.putExtra("tcpClient", mTcpClient);
+            startActivity(intent);
+        });
+
 
     }
 
