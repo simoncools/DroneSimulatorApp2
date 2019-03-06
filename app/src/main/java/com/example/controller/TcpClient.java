@@ -1,6 +1,10 @@
 package com.example.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.TextView;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -59,12 +63,13 @@ public class TcpClient {
         mServerMessage = null;
     }
 
-    public void run() {
+    public void run(Context ctx) {
         mRun = true;
         try {
-            InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
+            SharedPreferences pref = ctx.getSharedPreferences("MyPref", 0); // 0 - for private mode
+            InetAddress serverAddr = InetAddress.getByName(pref.getString("serverIP",SERVER_IP));
             System.out.println("Connecting...");
-            Socket socket = new Socket(serverAddr, SERVER_PORT);
+            Socket socket = new Socket(serverAddr,52832);
             try {
                 System.out.println("Connected");
                 mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);

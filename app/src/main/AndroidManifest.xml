@@ -13,8 +13,6 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".helpActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".settingsActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".movementActivity"
             android:screenOrientation="portrait" />

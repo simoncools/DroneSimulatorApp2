@@ -3,6 +3,8 @@ package com.example.controller;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class helpActivity extends AppCompatActivity {
@@ -11,15 +13,19 @@ public class helpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        EditText IP = findViewById(R.id.serverIPeditText);
+
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        TextView text1 = findViewById(R.id.textView4);
-        TextView text2 = findViewById(R.id.textView5);
-        TextView text3 = findViewById(R.id.textView6);
+        IP.setText(pref.getString("serverIP","192.168.43.145"));
+        final Button applyButton = findViewById(R.id.applyButton);
+        applyButton.setOnClickListener(v -> {
+            SharedPreferences.Editor editor = pref.edit();
 
-        text1.setText(pref.getString("serverIP",null));
-        text2.setText(pref.getString("serverPort",null));
-        text3.setText(pref.getBoolean("autoConnect",false)+"");
-
+            editor.putString("serverIP",IP.getText()+"");
+            editor.commit();
+            this.finish();
+        });
 
     }
 }

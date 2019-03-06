@@ -132,14 +132,6 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/MC_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/button_background"
-                android:foreground="@drawable/ic_all_inclusive_24dp" />
 
             <Button
                 android:id="@+id/connect_button"
@@ -147,7 +139,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_background"
-                android:foreground="@drawable/ic_wifi_tethering_24dp"/>
+                android:text="Start"/>
         </LinearLayout>
 
 
@@ -180,13 +172,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/settings_button"
+                android:id="@+id/MC_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="30dp"
                 android:layout_weight="1"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/button_background"
-                android:foreground="@drawable/ic_settings_24dp" />
+                android:foreground="@drawable/ic_all_inclusive_24dp" />
 
             <Button
                 android:id="@+id/help_button"

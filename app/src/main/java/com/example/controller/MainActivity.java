@@ -18,6 +18,9 @@ import io.github.controlwear.virtual.joystick.android.JoystickView;
 public class MainActivity extends AppCompatActivity {
     Context ctx;
     TcpClient mTcpClient;
+    int joy1Angle,joy1Strength,joy2Angle,joy2Strength;
+    Button connectButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,19 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonListener(){
-        final Button connectButton = findViewById(R.id.connect_button);
+        connectButton = findViewById(R.id.connect_button);
         connectButton.setOnClickListener(v->{
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
                     new ConnectTask().execute("");
-                    if (mTcpClient.ismRun()) connectButton.setText("Stop");
                 } else {
                     mTcpClient.stopClient();
-                    if (mTcpClient.ismRun()) connectButton.setText("Start");
                 }
-            }else{
+            }else {
                 new ConnectTask().execute("");
             }
+
         });
 
         final Button movementControlButton = findViewById(R.id.MC_button);
@@ -60,13 +62,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        final Button settingsButton = findViewById(R.id.settings_button);
-        settingsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, settingsActivity.class);
-            // intent.putExtra("tcpClient", mTcpClient);
-            startActivity(intent);
-        });
-
 
     }
 
@@ -76,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         joystick1.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
+                if(joy1Angle!=angle && joy1Strength!=strength){
+                    joy1Angle=angle;
+                    joy1Strength= strength;
                 TextView joystickText = findViewById(R.id.joystick1text);
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
@@ -84,14 +82,17 @@ public class MainActivity extends AppCompatActivity {
                     mTcpClient.sendMessage("JX1 " + xStrength + " JY1 " + yStrength);
                 }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
-            }
+            }}
         });
 
         JoystickView joystick2 = findViewById(R.id.joystick2);
         joystick2.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                TextView joystickText = findViewById(R.id.joystick2text);
+                if(joy2Angle!=angle && joy2Strength!=strength){
+                    joy2Angle=angle;
+                    joy2Strength= strength;
+                    TextView joystickText = findViewById(R.id.joystick2text);
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
                 joystickText.setText("x"+ xStrength + " y" + yStrength);
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     mTcpClient.sendMessage("JX2 " + xStrength + " JY2 " + yStrength);
                 }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
-            }
+            }}
         });
     }
 
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             mTcpClient = new TcpClient(msg-> {
                     publishProgress(msg);
             });
-            mTcpClient.run();
+            mTcpClient.run(ctx);
             return null;
         }
 
