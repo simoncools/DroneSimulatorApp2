@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     Context ctx;
     TcpClient mTcpClient;
     int joy1Angle,joy1Strength,joy2Angle,joy2Strength;
-    Button connectButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonListener(){
-        connectButton = findViewById(R.id.connect_button);
+        Button connectButton = findViewById(R.id.connect_button);
         connectButton.setOnClickListener(v->{
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         final Button movementControlButton = findViewById(R.id.MC_button);
         movementControlButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, movementActivity.class);
+            if(mTcpClient!=null) mTcpClient.stopClient();
            // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
         });
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         final Button helpButton = findViewById(R.id.help_button);
         helpButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, helpActivity.class);
+            if(mTcpClient!=null) mTcpClient.stopClient();
             // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
         });
