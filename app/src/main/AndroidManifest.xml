@@ -14,7 +14,7 @@
         <activity android:name=".HelpActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MovementControlActivity"
+            android:name=".MotionControlActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"

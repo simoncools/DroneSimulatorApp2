@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
-public class MovementControlActivity extends AppCompatActivity {
+public class MotionControlActivity extends AppCompatActivity {
 
     private Sensor gravitySensor;
     private SensorManager gravitySensorManager;
@@ -44,12 +44,12 @@ public class MovementControlActivity extends AppCompatActivity {
         connectButton.setOnClickListener(v->{
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
-                    new MovementControlActivity.ConnectTask().execute("");
+                    new MotionControlActivity.ConnectTask().execute("");
                 } else {
                     mTcpClient.stopClient();
                 }
             }else {
-                new MovementControlActivity.ConnectTask().execute("");
+                new MotionControlActivity.ConnectTask().execute("");
             }
 
         });

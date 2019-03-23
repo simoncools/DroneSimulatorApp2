@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button movementControlButton = findViewById(R.id.MC_button);
         movementControlButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MovementControlActivity.class);
+            Intent intent = new Intent(this, MotionControlActivity.class);
             if(mTcpClient!=null) mTcpClient.stopClient();
            // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
