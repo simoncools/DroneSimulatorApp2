@@ -40,13 +40,13 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/button_background"
-                android:foreground="@drawable/ic_settings_24dp" />
+                android:foreground="@drawable/ic_help_outline_24dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
-                android:text="Settings"
+                android:text="Help"
                 android:textAlignment="center"
                 android:textSize="25dp" />
         </LinearLayout>
@@ -80,7 +80,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/button_background"
-                android:foreground="@drawable/ic_wifi_tethering_24dp" />
+                android:text="START"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/button_background"
-                android:foreground="@drawable/ic_portable_wifi_off_24dp" />
+               android:text="STOP" />
 
             <TextView
                 android:layout_width="match_parent"

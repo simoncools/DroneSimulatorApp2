@@ -77,12 +77,6 @@ public class MotionControlActivity extends AppCompatActivity {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            TextView text1 =  findViewById(R.id.textView);
-            TextView text2 =  findViewById(R.id.textView2);
-            TextView text3 =  findViewById(R.id.textView3);
-            text1.setText(String.valueOf(event.values[0]));
-            text2.setText(String.valueOf(event.values[1]));
-            text3.setText(String.valueOf(event.values[2]));
             int xStrength =  (int)Math.round(-25 * event.values[1]);
             int yStrength =  (int)Math.round(-25 * event.values[0]);
             if(xStrength<-100) xStrength=-100;

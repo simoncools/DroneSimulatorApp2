@@ -70,10 +70,8 @@ public class MainActivity extends AppCompatActivity {
                 if(joy1Angle!=angle && joy1Strength!=strength){
                     joy1Angle=angle;
                     joy1Strength= strength;
-                TextView joystickText = findViewById(R.id.joystick1text);
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
-                joystickText.setText("x"+ xStrength + " y" + yStrength);
                 if(mTcpClient != null) {
                     mTcpClient.sendMessage("JX1 " + xStrength + " JY1 " + yStrength);
                 }
@@ -88,10 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 if(joy2Angle!=angle && joy2Strength!=strength){
                     joy2Angle=angle;
                     joy2Strength= strength;
-                    TextView joystickText = findViewById(R.id.joystick2text);
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
-                joystickText.setText("x"+ xStrength + " y" + yStrength);
                 if(mTcpClient != null) {
                     mTcpClient.sendMessage("JX2 " + xStrength + " JY2 " + yStrength);
                 }
