@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button movementControlButton = findViewById(R.id.MC_button);
         movementControlButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, movementActivity.class);
+            Intent intent = new Intent(this, MovementControlActivity.class);
             if(mTcpClient!=null) mTcpClient.stopClient();
            // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
@@ -57,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button helpButton = findViewById(R.id.help_button);
         helpButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, helpActivity.class);
+            Intent intent = new Intent(this, HelpActivity.class);
             if(mTcpClient!=null) mTcpClient.stopClient();
             // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
