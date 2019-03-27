@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,7 +19,7 @@ public class MotionControlActivity extends AppCompatActivity {
     private Sensor gravitySensor;
     private SensorManager gravitySensorManager;
     private TcpClient mTcpClient;
-    int joy1Angle,joy1Strength;
+    int joy1xStrength,joy1yStrength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,22 @@ public class MotionControlActivity extends AppCompatActivity {
         gravitySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         gravitySensor = gravitySensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         gravitySensorManager.registerListener(gravitySensorEventListener, gravitySensor,SensorManager.SENSOR_DELAY_NORMAL);
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
     protected void onDestroy() {
@@ -59,11 +76,11 @@ public class MotionControlActivity extends AppCompatActivity {
         joystick1.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                if (joy1Angle != angle && joy1Strength != strength) {
-                    joy1Angle = angle;
-                    joy1Strength = strength;
                     int yStrength = (int) Math.round(strength * Math.cos(Math.toRadians(angle)));
                     int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
+                if (joy1xStrength != xStrength && joy1yStrength != yStrength) {
+                    joy1xStrength = xStrength;
+                    joy1yStrength = yStrength;
                     if (mTcpClient != null) {
                         mTcpClient.sendMessage("JX1 " + xStrength + " JY1 " + yStrength);
                     }
@@ -77,12 +94,18 @@ public class MotionControlActivity extends AppCompatActivity {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            int xStrength =  (int)Math.round(-25 * event.values[1]);
-            int yStrength =  (int)Math.round(-25 * event.values[0]);
+            int xStrength =  (int)Math.round(-15* event.values[1]);
+            int yStrength =  (int)Math.round(-15 * event.values[0]);
             if(xStrength<-100) xStrength=-100;
             if(xStrength>100) xStrength=100;
             if(yStrength<-100) yStrength=-100;
             if(yStrength>100) yStrength=100;
+            TextView textView1 = findViewById(R.id.textView1);
+            TextView textView2 = findViewById(R.id.textView2);
+            textView1.setText(""+event.values[1]+"    "+xStrength);
+            textView2.setText(""+event.values[0]+"    "+yStrength);
+            textView1.setVisibility(View.VISIBLE);
+            textView2.setVisibility(View.VISIBLE);
 
             if(mTcpClient != null) {
                 mTcpClient.sendMessage("JX2 " + xStrength + " JY2 " + yStrength);

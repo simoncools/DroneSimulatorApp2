@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,7 +14,7 @@ import io.github.controlwear.virtual.joystick.android.JoystickView;
 public class MainActivity extends AppCompatActivity {
     Context ctx;
     TcpClient mTcpClient;
-    int joy1Angle,joy1Strength,joy2Angle,joy2Strength;
+    int joy1xStrength,joy1yStrength,joy2xStrength,joy2yStrength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,21 @@ public class MainActivity extends AppCompatActivity {
         buttonListener();
         ctx = getApplicationContext();
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
 
@@ -67,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
         joystick1.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                if(joy1Angle!=angle && joy1Strength!=strength){
-                    joy1Angle=angle;
-                    joy1Strength= strength;
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
+                if(joy1xStrength!=xStrength && joy1yStrength!=yStrength){
+                    joy1xStrength=xStrength;
+                    joy1yStrength= yStrength;
                 if(mTcpClient != null) {
                     mTcpClient.sendMessage("JX1 " + xStrength + " JY1 " + yStrength);
                 }
@@ -83,11 +99,12 @@ public class MainActivity extends AppCompatActivity {
         joystick2.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                if(joy2Angle!=angle && joy2Strength!=strength){
-                    joy2Angle=angle;
-                    joy2Strength= strength;
+
                 int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
                 int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
+                if(joy2xStrength!=xStrength || joy2yStrength!=yStrength){
+                    joy2xStrength=xStrength;
+                    joy2yStrength= yStrength;
                 if(mTcpClient != null) {
                     mTcpClient.sendMessage("JX2 " + xStrength + " JY2 " + yStrength);
                 }
