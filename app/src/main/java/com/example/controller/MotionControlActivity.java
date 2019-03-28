@@ -19,6 +19,7 @@ public class MotionControlActivity extends AppCompatActivity {
     private Sensor gravitySensor;
     private SensorManager gravitySensorManager;
     private TcpClient mTcpClient;
+    Button connectButton;
     int joy1xStrength,joy1yStrength;
 
     @Override
@@ -57,7 +58,7 @@ public class MotionControlActivity extends AppCompatActivity {
     }
 
     public void buttonListener(){
-        Button connectButton = findViewById(R.id.MC_connect_button);
+        connectButton = findViewById(R.id.MC_connect_button);
         connectButton.setOnClickListener(v->{
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
@@ -100,13 +101,6 @@ public class MotionControlActivity extends AppCompatActivity {
             if(xStrength>100) xStrength=100;
             if(yStrength<-100) yStrength=-100;
             if(yStrength>100) yStrength=100;
-            TextView textView1 = findViewById(R.id.textView1);
-            TextView textView2 = findViewById(R.id.textView2);
-            textView1.setText(""+event.values[1]+"    "+xStrength);
-            textView2.setText(""+event.values[0]+"    "+yStrength);
-            textView1.setVisibility(View.VISIBLE);
-            textView2.setVisibility(View.VISIBLE);
-
             if(mTcpClient != null) {
                 mTcpClient.sendMessage("JX2 " + xStrength + " JY2 " + yStrength);
             }
@@ -123,7 +117,7 @@ public class MotionControlActivity extends AppCompatActivity {
             mTcpClient = new TcpClient(msg-> {
                 publishProgress(msg);
             });
-            mTcpClient.run(getApplicationContext());
+            mTcpClient.run(getApplicationContext(),connectButton);
             return null;
         }
 

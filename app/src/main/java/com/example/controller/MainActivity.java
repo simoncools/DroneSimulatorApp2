@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
     Context ctx;
+    Button connectButton;
     TcpClient mTcpClient;
     int joy1xStrength,joy1yStrength,joy2xStrength,joy2yStrength;
 
@@ -44,17 +46,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonListener(){
-        Button connectButton = findViewById(R.id.connect_button);
+        connectButton = findViewById(R.id.connect_button);
         connectButton.setOnClickListener(v->{
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
+                    Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_SHORT).show();
                     new ConnectTask().execute("");
                 } else {
                     mTcpClient.stopClient();
                 }
             }else {
+                Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_SHORT).show();
                 new ConnectTask().execute("");
             }
+
 
         });
 
@@ -62,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         movementControlButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, MotionControlActivity.class);
             if(mTcpClient!=null) mTcpClient.stopClient();
-           // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
         });
 
@@ -70,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         helpButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, HelpActivity.class);
             if(mTcpClient!=null) mTcpClient.stopClient();
-            // intent.putExtra("tcpClient", mTcpClient);
             startActivity(intent);
         });
 
@@ -120,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
             mTcpClient = new TcpClient(msg-> {
                     publishProgress(msg);
             });
-            mTcpClient.run(ctx);
+            mTcpClient.run(ctx,connectButton);
+           // Toast.makeText(getApplicationContext(), "rip", Toast.LENGTH_SHORT).show();
             return null;
         }
 

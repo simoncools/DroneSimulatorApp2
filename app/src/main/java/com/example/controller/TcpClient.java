@@ -3,7 +3,9 @@ package com.example.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -63,8 +65,7 @@ public class TcpClient {
         mServerMessage = null;
     }
 
-    public void run(Context ctx) {
-        mRun = true;
+    public void run(Context ctx, Button connectionButton) {
         try {
             SharedPreferences pref = ctx.getSharedPreferences("MyPref", 0); // 0 - for private mode
             InetAddress serverAddr = InetAddress.getByName(pref.getString("serverIP",SERVER_IP));
@@ -74,14 +75,17 @@ public class TcpClient {
                 System.out.println("Connected");
                 mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                 mBufferIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                mRun = true;
+                connectionButton.setText("stop");
                 while (mRun) {
                     mServerMessage = mBufferIn.readLine();
                     if (mServerMessage != null && mMessageListener != null) {
                         mMessageListener.messageReceived(mServerMessage);
                     }
+
                 }
             } catch (Exception e) {
-               // System.out.println("Error");
+                System.out.println("Error");
             } finally {
                 socket.close();
                 System.out.println("Disconnected");
@@ -90,7 +94,8 @@ public class TcpClient {
         } catch (Exception e) {
             System.out.println("Error");
         }
-
+        connectionButton.setText("start");
+        mRun=false;
     }
 
     public boolean ismRun() {
