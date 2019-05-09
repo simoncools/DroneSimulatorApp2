@@ -88,7 +88,7 @@ public class MotionControlActivity extends AppCompatActivity {
                     //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        },5);
     }
 
         private SensorEventListener gravitySensorEventListener = new SensorEventListener(){

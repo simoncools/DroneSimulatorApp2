@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
             }}
-        });
+        },5);
 
         JoystickView joystick2 = findViewById(R.id.joystick2);
         joystick2.setOnMoveListener(new JoystickView.OnMoveListener() {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
             }}
-        });
+        },5);
     }
 
     public class ConnectTask extends AsyncTask<String, String, TcpClient> {
