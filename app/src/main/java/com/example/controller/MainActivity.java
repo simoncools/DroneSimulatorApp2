@@ -128,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMove(int angle, int strength) {
 
-                int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
-                int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
+                int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle+45)));
+                int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle+45)));
                 if(joy2xStrength!=xStrength || joy2yStrength!=yStrength){
                     joy2xStrength=xStrength;
                     joy2yStrength= yStrength;
