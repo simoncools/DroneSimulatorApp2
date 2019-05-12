@@ -53,41 +53,54 @@
             android:layout_marginRight="-30dp"
             tools:ignore="VectorDrawableCompat" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_arrow_upward_24dp"
-                android:layout_marginBottom="-30dp"
-                tools:ignore="VectorDrawableCompat" />
-
-            <io.github.controlwear.virtual.joystick.android.JoystickView
-                android:id="@+id/joystickMC"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|center_horizontal"
+                android:orientation="horizontal">
 
-                app:JV_backgroundColor="@color/Joystick"
-                app:JV_borderColor="@color/JoystickAccent"
-                app:JV_borderWidth="6dp"
-                app:JV_buttonColor="@color/JoystickAccent"
-                app:JV_buttonSizeRatio="25%"
-                app:JV_fixedCenter="false" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_arrow_downward_24dp"
-                android:layout_marginTop="-30dp"
-                tools:ignore="VectorDrawableCompat" />
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/leftTrimM"
+                    android:background="@drawable/button_background"
+                    android:foreground="@drawable/ic_keyboard_arrow_left_24dp"
+                    android:foregroundTint="@color/Joystick" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/upTrimM"
+                        android:background="@drawable/button_background"
+                        android:foreground="@drawable/ic_keyboard_arrow_up_24dp"
+                        android:foregroundTint="@color/Joystick" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="50dp"
+                        android:id="@+id/downTrimM"
+                        android:background="@drawable/button_background"
+                        android:foreground="@drawable/ic_keyboard_arrow_down_24dp"
+                        android:foregroundTint="@color/Joystick" />
+
+                </LinearLayout>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/rigthTrimM"
+                    android:background="@drawable/button_background"
+                    android:foreground="@drawable/ic_keyboard_arrow_right_24dp"
+                    android:foregroundTint="@color/Joystick" />
+            </LinearLayout>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

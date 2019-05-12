@@ -77,12 +77,37 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        final Button upTrim = findViewById(R.id.upTrim);
+        upTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRU");
+            }
+        });
+        final Button downTrim = findViewById(R.id.downTrim);
+        downTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRD");
+            }
+        });
+        final Button leftTrim = findViewById(R.id.leftTrim);
+        leftTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRL");
+            }
+        });
+        final Button rigthTrim = findViewById(R.id.rigthTrim);
+        rigthTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRR");
+            }
+        });
+
 
     }
 
 
     public void joystickListener(){
-        JoystickView joystick1 = findViewById(R.id.joystick1);
+       /* JoystickView joystick1 = findViewById(R.id.joystick1);
         joystick1.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
@@ -96,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
               //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
             }}
-        },5);
+        },5);*/
 
         JoystickView joystick2 = findViewById(R.id.joystick2);
         joystick2.setOnMoveListener(new JoystickView.OnMoveListener() {

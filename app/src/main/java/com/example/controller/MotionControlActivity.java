@@ -26,7 +26,6 @@ public class MotionControlActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movement);
-        joystickListener();
         buttonListener();
 
         gravitySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -71,24 +70,30 @@ public class MotionControlActivity extends AppCompatActivity {
             }
 
         });
-    }
-    public void joystickListener() {
-        JoystickView joystick1 = findViewById(R.id.joystickMC);
-        joystick1.setOnMoveListener(new JoystickView.OnMoveListener() {
-            @Override
-            public void onMove(int angle, int strength) {
-                    int yStrength = (int) Math.round(strength * Math.cos(Math.toRadians(angle)));
-                    int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
-                if (joy1xStrength != xStrength && joy1yStrength != yStrength) {
-                    joy1xStrength = xStrength;
-                    joy1yStrength = yStrength;
-                    if (mTcpClient != null) {
-                        mTcpClient.sendMessage("JX1 " + xStrength + " JY1 " + yStrength);
-                    }
-                    //  if(resp!=null) Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_SHORT).show();
-                }
+        final Button upTrim = findViewById(R.id.upTrim);
+        upTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRU");
             }
-        },5);
+        });
+        final Button downTrim = findViewById(R.id.downTrim);
+        downTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRD");
+            }
+        });
+        final Button leftTrim = findViewById(R.id.leftTrim);
+        leftTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRL");
+            }
+        });
+        final Button rigthTrim = findViewById(R.id.rigthTrim);
+        rigthTrim.setOnClickListener(v -> {
+            if(mTcpClient != null) {
+                mTcpClient.sendMessage("TRR");
+            }
+        });
     }
 
         private SensorEventListener gravitySensorEventListener = new SensorEventListener(){
