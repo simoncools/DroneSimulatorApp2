@@ -70,25 +70,25 @@ public class MotionControlActivity extends AppCompatActivity {
             }
 
         });
-        final Button upTrim = findViewById(R.id.upTrim);
+        final Button upTrim = findViewById(R.id.upTrimM);
         upTrim.setOnClickListener(v -> {
             if(mTcpClient != null) {
                 mTcpClient.sendMessage("TRU");
             }
         });
-        final Button downTrim = findViewById(R.id.downTrim);
+        final Button downTrim = findViewById(R.id.downTrimM);
         downTrim.setOnClickListener(v -> {
             if(mTcpClient != null) {
                 mTcpClient.sendMessage("TRD");
             }
         });
-        final Button leftTrim = findViewById(R.id.leftTrim);
+        final Button leftTrim = findViewById(R.id.leftTrimM);
         leftTrim.setOnClickListener(v -> {
             if(mTcpClient != null) {
                 mTcpClient.sendMessage("TRL");
             }
         });
-        final Button rigthTrim = findViewById(R.id.rigthTrim);
+        final Button rigthTrim = findViewById(R.id.rigthTrimM);
         rigthTrim.setOnClickListener(v -> {
             if(mTcpClient != null) {
                 mTcpClient.sendMessage("TRR");
