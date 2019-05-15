@@ -1,10 +1,17 @@
 package com.example.controller;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Context ctx;
     Button connectButton;
     TcpClient mTcpClient;
-    int joy1xStrength,joy1yStrength,joy2xStrength,joy2yStrength;
+    int joy1xStrength, joy1yStrength, joy2xStrength, joy2yStrength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,46 @@ public class MainActivity extends AppCompatActivity {
         joystickListener();
         buttonListener();
         ctx = getApplicationContext();
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+               double latitude = location.getLatitude();
+               double longitude = location.getLongitude();
+                System.out.println("location test: lat"+latitude+" long"+longitude);
+                TextView text = findViewById(R.id.textView1);
+                text.setText("lat"+latitude+" long"+longitude);
+                if(mTcpClient != null) {
+                    mTcpClient.sendMessage("lat "+latitude+" long "+longitude);
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //  public void onRequestPermissionsResult(int requestCode, String[] permissions,int[] grantResults);
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            System.out.println("location no permission");
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
@@ -128,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMove(int angle, int strength) {
 
-                int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle+45)));
-                int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle+45)));
+                int yStrength = (int)  Math.round(strength * Math.cos(Math.toRadians(angle)));
+                int xStrength = (int) Math.round(strength * Math.sin(Math.toRadians(angle)));
                 if(joy2xStrength!=xStrength || joy2yStrength!=yStrength){
                     joy2xStrength=xStrength;
                     joy2yStrength= yStrength;
