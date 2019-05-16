@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView text = findViewById(R.id.textView1);
                 text.setText("lat"+latitude+" long"+longitude);
                 if(mTcpClient != null) {
-                    mTcpClient.sendMessage("lat "+latitude+" long "+longitude);
+                    mTcpClient.sendMessage("gps "+latitude+" "+longitude);
                 }
             }
 
