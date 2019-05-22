@@ -17,7 +17,7 @@ public class HelpActivity extends AppCompatActivity {
         EditText IP = findViewById(R.id.serverIPeditText);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        IP.setText(pref.getString("serverIP","192.168.43.145"));
+        IP.setText(pref.getString("serverIP","192.168.0.10"));
         final Button applyButton = findViewById(R.id.applyButton);
         applyButton.setOnClickListener(v -> {
             SharedPreferences.Editor editor = pref.edit();
