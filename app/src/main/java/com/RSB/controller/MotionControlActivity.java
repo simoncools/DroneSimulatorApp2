@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.RSB.controller;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,9 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MotionControlActivity extends AppCompatActivity {
 

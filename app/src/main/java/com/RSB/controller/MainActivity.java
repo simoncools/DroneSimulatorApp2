@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.RSB.controller;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -10,17 +10,13 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;

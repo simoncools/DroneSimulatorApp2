@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.RSB.controller;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
