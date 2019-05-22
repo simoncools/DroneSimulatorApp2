@@ -1,11 +1,17 @@
 package com.example.controller;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.hardware.SensorEventListener;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,6 +65,7 @@ public class MotionControlActivity extends AppCompatActivity {
     public void buttonListener(){
         connectButton = findViewById(R.id.MC_connect_button);
         connectButton.setOnClickListener(v->{
+            locationsetup();
             if(mTcpClient != null) {
                 if (!mTcpClient.ismRun()) {
                     new MotionControlActivity.ConnectTask().execute("");
@@ -114,6 +121,41 @@ public class MotionControlActivity extends AppCompatActivity {
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {}
     };
+    public void locationsetup() {
+
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                System.out.println("location test: lat" + latitude + " long" + longitude);
+                if (mTcpClient != null) {
+                    mTcpClient.sendMessage("gps " + latitude + " " + longitude);
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+    }
 
     public class ConnectTask extends AsyncTask<String, String, TcpClient> {
 
